@@ -4,6 +4,9 @@ function renderEditor() {
     let inputEl=document.querySelector("#default-todo-panel .todo-editor> input");  
      
     let addTask = ()=>{
+        if(inputEl.value.length===0){
+            return;
+        }
         let newTask = {
             title: inputEl.value,
             done: false,
@@ -12,7 +15,7 @@ function renderEditor() {
         tasks.push(newTask);
         console.log("tasks: ",tasks); 
 
-        renderTasktems() 
+        renderTaskItems() 
     }
 
     inputEl.onkeypress = (e) =>{
@@ -29,7 +32,7 @@ function renderEditor() {
         addTask();
         };
 } 
-function renderTasktems() {
+function renderTaskItems() {
     console.log("render items");
    let itemsEl = document.querySelector("#default-todo-panel .todo-items");
    
@@ -70,14 +73,9 @@ function renderTasktems() {
        titleEl.innerText =task.title;
        itemEl.append(titleEl);
 
-       let cancelEl = document.createElement("button");
-       cancelEl.innerText = "x";
-       
-      cancelEl.onclick=()=> {
-          tasks.splice(i,1);
-      };
+       let ctrlbarEl= renderTaskCtrlBar(tasks,i);
 
-       itemEl.append(cancelEl);
+       itemEl.append(ctrlbarEl);
 
        itemsEl.append(itemEl);
 
@@ -86,5 +84,38 @@ function renderTasktems() {
 
    }
 }
+
+function renderTaskCtrlBar(tasks,taskIdx){
+    let ctrlbarEl = document.createElement("div");
+    ctrlbarEl.className ="ctrlbar" ;
+
+    let upEl = document.createElement("button");
+    if(taskIdx===0){
+        upEl.disabled= true;
+    }
+    upEl.innerText = "↿";
+    upEl.onclick=()=> {
+     
+ };
+    ctrlbarEl.append(upEl);
+
+    let downEl = document.createElement("button");
+    downEl.innerText = "⇂";
+    downEl.onclick=()=> {
+     
+ };
+    ctrlbarEl.append(downEl);
+
+    let cancelEl = document.createElement("button");
+    cancelEl.innerText = "x";
+    
+   cancelEl.onclick=()=> {
+       tasks.splice(taskIdx,1);
+       renderTaskItems();
+   };
+
+    ctrlbarEl.append(cancelEl);
+    return ctrlbarEl;
+} 
 renderEditor();
-renderTasktems();
+renderTaskItems();
