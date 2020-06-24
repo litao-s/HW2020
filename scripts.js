@@ -1,4 +1,3 @@
-
 let tasks=[];
 
 function renderEditor() {
@@ -38,17 +37,33 @@ function renderTasktems() {
        
    
        
-   
-
    console.log(itemsEl);
 
    for(let i=0;i<tasks.length;i++){
        let task =tasks[i];
        let itemEl=document.createElement("div");
+       itemEl.className="task";
+       
 
 
        let doneEl = document.createElement("input");
        doneEl.type ="checkbox";
+       
+       doneEl.checked=task.done;
+       if(task.done){
+       itemEl.classList.add("done");    
+       } else{
+        itemEl.classList.remove("done"); 
+       }
+
+       doneEl.onchange=(e)=>{
+           task.done=e.target.checked;
+           if(task.done){
+            itemEl.classList.add("done");    
+            } else{
+             itemEl.classList.remove("done"); 
+            }
+       }
        itemEl.append(doneEl);
 
        let titleEl = document.createElement("label");
@@ -57,6 +72,11 @@ function renderTasktems() {
 
        let cancelEl = document.createElement("button");
        cancelEl.innerText = "x";
+       
+      cancelEl.onclick=()=> {
+          tasks.splice(i,1);
+      };
+
        itemEl.append(cancelEl);
 
        itemsEl.append(itemEl);
