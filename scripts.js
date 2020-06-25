@@ -89,7 +89,12 @@ function renderTaskCtrlBar(tasks,taskIdx){
     let ctrlbarEl = document.createElement("div");
     ctrlbarEl.className ="ctrlbar" ;
 
-
+    let vipEl = document.createElement("button");
+    vipEl.innerText = "✰";
+    vipEl.onclick=()=>{
+    vipEl.style.color="red";
+}
+    ctrlbarEl.append(vipEl);
 
     let upEl = document.createElement("button");
     if(taskIdx===0){
