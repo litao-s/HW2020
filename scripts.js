@@ -89,22 +89,36 @@ function renderTaskCtrlBar(tasks,taskIdx){
     let ctrlbarEl = document.createElement("div");
     ctrlbarEl.className ="ctrlbar" ;
 
+
+
     let upEl = document.createElement("button");
     if(taskIdx===0){
         upEl.disabled= true;
     }
     upEl.innerText = "↿";
     upEl.onclick=()=> {
-     
+    sc=tasks[taskIdx - 1];
+    tasks[taskIdx-1] =tasks [taskIdx];
+    tasks[taskIdx]=sc;
+    renderTaskItems();
  };
     ctrlbarEl.append(upEl);
 
     let downEl = document.createElement("button");
+    if(taskIdx===tasks.length-1){
+        downEl.disabled=true;
+    }
     downEl.innerText = "⇂";
     downEl.onclick=()=> {
-     
+        sc=tasks[taskIdx +1];
+        tasks[taskIdx+1] =tasks [taskIdx];
+        tasks[taskIdx]=sc;
+        renderTaskItems(); 
  };
     ctrlbarEl.append(downEl);
+
+
+
 
     let cancelEl = document.createElement("button");
     cancelEl.innerText = "x";
